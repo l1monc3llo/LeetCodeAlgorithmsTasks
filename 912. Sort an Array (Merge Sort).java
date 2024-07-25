@@ -3,40 +3,34 @@ class Solution {
         return mergeSort(nums);
     }
     
-    public int[] mergeSort(int[] nums) {
+    private int[] mergeSort(int[] nums) {
         if (nums.length <= 1) return nums;
         int mid = nums.length / 2;
-        int[] left = new int[mid];
-        int[] right = new int[nums.length - mid];
-        for (int i = 0; i < mid; ++i){
-            left[i] = nums[i];
-        }
-        for (int i = mid; i < nums.length; ++i){
-            right[i - mid] = nums[i];
-        }
+        int[] left = Arrays.copyOfRange(nums, 0, mid);
+        int[] right = Arrays.copyOfRange(nums, mid, nums.length);
         mergeSort(left);
         mergeSort(right);
-        merge(nums, left, right);
-        return nums;
+        return merge(nums, left, right);
     }
     
-    public void merge(int[] nums, int[] left, int[] right) {
+    private int[] merge(int[] nums, int[] left, int[] right) {
         int i = 0, j = 0, k = 0;
         while (i < left.length && j < right.length) {
-            if (left[i] <= right[j]){
+            if (left[i] <= right[j]) {
                 nums[k++] = left[i++];
-            }
-            else{
+            } else {
                 nums[k++] = right[j++];
             }
         }
         
-        while (i < left.length){
+        while (i < left.length) {
             nums[k++] = left[i++];
         }
         
-        while (j < right.length){
+        while (j < right.length) {
             nums[k++] = right[j++];
         }
+        
+        return nums;
     }
 }
